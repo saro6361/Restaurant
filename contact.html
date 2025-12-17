@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WE CRUNCH - Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">WE CRUNCH</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5">Contact & Reservation</h2>
+      <div class="row">
+        <!-- Contact Form -->
+        <div class="col-md-6">
+          <h5>Send Us a Message</h5>
+          <form action="send_mail.php" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Your Name</label>
+              <input type="text" name="name" id="name" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" name="email" id="email" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea name="message" id="message" rows="4" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+
+        <!-- Contact Info + Map -->
+        <div class="col-md-6">
+          <h5>Visit Us</h5>
+          <p>📍 512, Bangalore Rd, opposite SANGAM READYMADES,<br>
+          PTV Colony, Thiruvalluvar Nagar,<br>
+          Krishnagiri, Tamil Nadu 635001</p>
+          <p>📞 +91 9876543210</p>
+          <p>✉️ support@wecrunch.com</p>
+
+          
+          <!-- Embedded Google Map -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.254407349626!2d78.215909!3d12.5226038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bac3535536f7bf1%3A0xe5197aa3a29e97d!2sLEBEN%20CAFE%20WE%20CHAI%20%26%20WE%20CRUNCH!5e0!3m2!1sen!2sin!4v1722400000000" 
+            width="100%" 
+            height="250" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center bg-dark text-white py-4">
+    <p class="mb-0">&copy; 2025 WE CRUNCH. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
