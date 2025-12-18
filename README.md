@@ -1,10 +1,12 @@
-## Features
-- Food menu display
-- Order placement
-- Contact form
-- Admin order history (planned)
+# Restaurant Project
 
-## Tech Stack
-- Frontend: HTML, CSS, JavaScript
-- Backend: PHP
-- Database: MySQL
+This is a simple restaurant website project.
+
+It is developed using HTML, CSS, JavaScript, PHP, and MySQL.
+
+Features:
+
+- Menu page to display food items
+- Online order option
+- Payment integration
+- Email notification using PHPMailer (message sent to admin/customer)
