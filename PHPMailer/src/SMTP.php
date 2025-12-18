@@ -34,8 +34,9 @@ class SMTP
      * The PHPMailer SMTP version number.
      *
      * @var string
+     * @deprecated This constant will be removed in PHPMailer 8.0. Use `PHPMailer::VERSION` instead.
      */
-    const VERSION = '6.10.0';
+    const VERSION = '7.0.1';
 
     /**
      * SMTP line break constant.
@@ -205,6 +206,7 @@ class SMTP
         'Haraka' => '/[\d]{3} Message Queued \((.*)\)/',
         'ZoneMTA' => '/[\d]{3} Message queued as (.*)/',
         'Mailjet' => '/[\d]{3} OK queued as (.*)/',
+        'Gsmtp' => '/[\d]{3} 2\.0\.0 OK (.*) - gsmtp/',
     ];
 
     /**
@@ -493,7 +495,9 @@ class SMTP
         //PHP 5.6.7 dropped inclusion of TLS 1.1 and 1.2 in STREAM_CRYPTO_METHOD_TLS_CLIENT
         //so add them back in manually if we can
         if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) {
+            // phpcs:ignore PHPCompatibility.Constants.NewConstants.stream_crypto_method_tlsv1_2_clientFound
             $crypto_method |= STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT;
+            // phpcs:ignore PHPCompatibility.Constants.NewConstants.stream_crypto_method_tlsv1_1_clientFound
             $crypto_method |= STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT;
         }
 
@@ -632,7 +636,13 @@ class SMTP
                 if (null === $OAuth) {
                     return false;
                 }
-                $oauth = $OAuth->getOauth64();
+                try {
+                    $oauth = $OAuth->getOauth64();
+                } catch (\Exception $e) {
+                    // We catch all exceptions and convert them to PHPMailer exceptions to be able to
+                    // handle them correctly later
+                    throw new Exception("SMTP authentication error", 0, $e);
+                }
                 /*
                  * An SMTP command line can have a maximum length of 512 bytes, including the command name,
                  * so the base64-encoded OAUTH token has a maximum length of:
@@ -1340,7 +1350,16 @@ class SMTP
 
                 //stream_select returns false when the `select` system call is interrupted
                 //by an incoming signal, try the select again
-                if (stripos($message, 'interrupted system call') !== false) {
+                if (
+                    stripos($message, 'interrupted system call') !== false ||
+                    (
+                        // on applications with a different locale than english, the message above is not found because
+                        // it's translated. So we also check for the SOCKET_EINTR constant which is defined under
+                        // Windows and UNIX-like platforms (if available on the platform).
+                        defined('SOCKET_EINTR') &&
+                        stripos($message, 'stream_select(): Unable to select [' . SOCKET_EINTR . ']') !== false
+                    )
+                ) {
                     $this->edebug(
                         'SMTP -> get_lines(): retrying stream_select',
                         self::DEBUG_LOWLEVEL
